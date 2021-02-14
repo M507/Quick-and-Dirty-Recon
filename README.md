@@ -18,16 +18,6 @@ WEBHOOK_URL=https://hooks.slack.com/services/AAAAAAAAAAAAAAAAAAAAAAA
 
 ```
 
-### Start
-#### Main method
-```
-
-```
-
-#### cron jobs method
-```
-python3 /root/vsvm/subzy/main.py
-```
 
 ### Directory tree
 
