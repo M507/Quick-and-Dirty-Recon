@@ -4,9 +4,12 @@ CommonSubdomainList1 = ['www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'p
 
 
 def prepare_brute_force_list(current_list):
+    new_list = [] 
     for url in current_list:
-        for sub in CommonSubdomainList1:
-            current_list.append(sub+'.'+url)
+        if url.startswith("www") == False:
+            for sub in CommonSubdomainList1:
+                new_url = sub+'.'+url
+                new_list.append(new_url)
     return current_list
 
 

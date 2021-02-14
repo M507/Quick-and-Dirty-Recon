@@ -42,14 +42,12 @@ def work(target):
     return 1
 
 def main():
-    lines_ALL_URLs_FILE = readafile(ALL_URLs_FILE)
-    #lines_ALL_URLs_FILE = list(dict.fromkeys(lines_ALL_URLs_FILE))
-    #lines_ALL_URLs_FILE = prepare_brute_force_list(lines_ALL_URLs_FILE)
-    
-    for url in lines_ALL_URLs_FILE:
-        print(url)
-    exit(1)
-    for line in lines_ALL_URLs_FILE:
+    lines_ALL_URLs = readafile(ALL_URLs_FILE)
+    lines_ALL_URLs = list(dict.fromkeys(lines_ALL_URLs))
+    lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
+    lines_ALL_URLs_new = [ url for url in lines_ALL_URLs if url not in lines_VISITED_URLs]
+    lines_ALL_URLs = prepare_brute_force_list(lines_ALL_URLs_new)
+    for line in lines_ALL_URLs:
         try:
             line = line.strip("\r").strip("\n").strip(" ")
             # Needs to be refreshed since somehting new has been added
