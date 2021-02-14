@@ -1,6 +1,11 @@
-import sqlite3
-import os
-import operator
+import sys
+ROOT_DIR = "../"
+sys.path.insert(1, ROOT_DIR)
+
+from common import * 
+from subcommon import * 
+
+import sqlite3, os, operator
 from collections import OrderedDict
 
 try:
@@ -52,6 +57,7 @@ def work():
     queryResults = queryHistoryFile(historyFile)
     URLs = [(url[0]) for url in queryResults]
     URLs = [(str(urlparse(url).hostname)+'\n') for url in URLs]
+    URLs = list(dict.fromkeys(URLs))
     for url in URLs:
         print(url)
     historyFile, newHistoryFile = getHistoryFileName()
@@ -59,13 +65,16 @@ def work():
     return URLs
 
 
-def main():
-    queryResults = work()
-    writelines_intofile(queryResults)
-    command = "cat /tmp/.sdfbhdkslqf.txt |  ssh root@vsvm.mohammed.red -T 'cat >> /root/vsvm/Storage/urls.txt'"
-    os.system(command)
+def send_hostnames():
+    try:
+        queryResults = work()
+        writelines_intofile(queryResults)
+        command = "cat /tmp/.sdfbhdkslqf.txt |  ssh root@vsvm.mohammed.red -T 'cat > /root/vsvm/Storage/urls.txt'"
+        os.system(command)
+        slack_notify("Chrome has sent today's data to VSMV.mohammed.red")
+    except:
+        slack_notify("VSMV: Send-urls.py faced an error!!")
 
 
-
-main()
+send_hostnames()
 
