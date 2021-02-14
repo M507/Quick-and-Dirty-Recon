@@ -36,7 +36,7 @@ def work(target):
         return 0
 
     if verify(stdout):
-        message = PWD + " found something!"
+        message = PWD + " found something! '" + target + "'"
         slack_notify(message)
 
     return 1
