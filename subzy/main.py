@@ -3,6 +3,7 @@ ROOT_DIR = "/root/vsvm/"
 sys.path.insert(1, ROOT_DIR)
 
 from common import * 
+from subcommon import * 
 
 PWD = ROOT_DIR + "/subzy"
 VISITED_URLs_FILE = PWD + "/Storage/visited_urls.txt"
@@ -42,10 +43,17 @@ def work(target):
 
 def main():
     lines_ALL_URLs_FILE = readafile(ALL_URLs_FILE)
-    lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
+    #lines_ALL_URLs_FILE = list(dict.fromkeys(lines_ALL_URLs_FILE))
+    #lines_ALL_URLs_FILE = prepare_brute_force_list(lines_ALL_URLs_FILE)
+    
+    for url in lines_ALL_URLs_FILE:
+        print(url)
+    exit(1)
     for line in lines_ALL_URLs_FILE:
         try:
             line = line.strip("\r").strip("\n").strip(" ")
+            # Needs to be refreshed since somehting new has been added
+            lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
             if line in lines_VISITED_URLs:
                 continue
             else:

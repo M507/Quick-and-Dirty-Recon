@@ -2,3 +2,5 @@
 !.gitignore
 __pycache__
 Storage
+test.py
+test.txt
