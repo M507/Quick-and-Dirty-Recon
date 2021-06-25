@@ -69,7 +69,7 @@ def send_hostnames():
     try:
         queryResults = work()
         writelines_intofile(queryResults)
-        command = "cat /tmp/.sdfbhdkslqf.txt |  ssh root@vsvm.mohammed.red -T 'cat > /root/vsvm/Storage/urls.txt'"
+        command = "cat /tmp/.sdfbhdkslqf.txt |  ssh root@vsvm.mohammed.red -T 'cat >> /root/vsvm/Storage/urls.txt'"
         os.system(command)
         slack_notify("Chrome has sent today's data to VSMV.mohammed.red")
     except:

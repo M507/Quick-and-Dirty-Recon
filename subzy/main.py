@@ -9,6 +9,7 @@ PWD = ROOT_DIR + "/subzy"
 VISITED_URLs_FILE = PWD + "/Storage/visited_urls.txt"
 BIN = "/root/go/bin/subzy"
 
+debug = 1
 
 def verify(stdout):
     try:
@@ -31,6 +32,9 @@ def isError(stdout):
 def work(target):
     command = BIN + " -target "+ target
     stdout = str(subprocess_execute_command(command))
+    
+    if debug:
+        print(stdout)
     
     if isError(stdout):
         return 0
@@ -65,4 +69,5 @@ def main():
 
 
 if __name__ == "__main__":
+    print("subzy/main.py started")
     main()
