@@ -3,6 +3,7 @@
 
 ### Integrated projects
 - https://github.com/LukaSikic/subzy
+- https://github.com/anshumanpattnaik/http-request-smuggling
 
 ### How to start adding projects
 

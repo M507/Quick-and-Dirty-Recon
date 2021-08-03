@@ -2,6 +2,8 @@
 !.gitignore
 __pycache__
 Storage
+Scope
 test.py
 test.txt
 mydocs.txt
+test-*
