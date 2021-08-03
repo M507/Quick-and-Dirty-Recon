@@ -1,0 +1,3 @@
+[submodule "http-request-smuggling"]
+	path = http-request-smuggling
+	url = https://github.com/anshumanpattnaik/http-request-smuggling
