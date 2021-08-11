@@ -20,11 +20,12 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 BURP_PROXY = {"http": "http://"+BURP_PROXY_IP+":8080", "https": "http://"+BURP_PROXY_IP+":8080"}
+headers = {"User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Mobile Safari/537.36"}
 
 
 def work(TARGET):
     try:
-        r = requests.get(TARGET, proxies=BURP_PROXY, verify=False)
+        r = requests.get(TARGET, proxies=BURP_PROXY, headers=headers, verify=False, timeout=10)
     except Exception as e: print(e)
 
 
@@ -50,8 +51,7 @@ def get_path_and_q(URL):
 def main():
     allowed_strings_slash_domains = get_scope()
 
-    lines_ALL_Out_Of_Scope_URLs = readafile(OUT_OF_SCOPE_FILE)
-    lines_ALL_Out_Of_Scope_words = readafile(OUT_OF_SCOPE_WORDS_FILE)
+    
 
     lines_ALL_URLs = readafile(ALL_URLs_FILE_WITH_PARAMETERS)
     print("lines_ALL_URLs" + str(lines_ALL_URLs))
@@ -65,7 +65,11 @@ def main():
     random_sleep_flag = 0
 
     for line in lines_ALL_URLs:
-        try:        
+        try:
+            # In case I am editing the out of scope list.. it update itself without rerunning the script again
+            lines_ALL_Out_Of_Scope_URLs = readafile(OUT_OF_SCOPE_FILE)
+            lines_ALL_Out_Of_Scope_words = readafile(OUT_OF_SCOPE_WORDS_FILE)
+
             line = line.strip("\r").strip("\n").strip(" ")
             path_string, query_string = get_path_and_q(line)
             URL_and_PATH = extract_tld_string(line) + path_string
@@ -107,6 +111,7 @@ def main():
                 append_to_file(VISITED_URLs_FILE, tobe_stored_url)
                 MESSAGE = "This '"+str(line) + "' has no query_string"
                 print(MESSAGE)
+                continue
             
             if len(line) > 1:
                 random_sleep_flag += 1
