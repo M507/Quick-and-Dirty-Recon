@@ -107,6 +107,8 @@ def run(IN_FILE_NAME,OUT_FILE_NAME):
         # Save
         #append_to_file_lines(OUT_FILE_NAME, domain_names)
         domain_names = list(dict.fromkeys(domain_names))
+        if (len(domain_names)-1) >= len(lines_ALL_URLs):
+            return
         overwrite_file(OUT_FILE_NAME,domain_names)
     except Exception as ex:
         print("run(FILE_NAME)")

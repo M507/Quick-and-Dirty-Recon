@@ -37,6 +37,15 @@ def isError(stdout):
             print(ex)
     return 0
 
+def clean():
+    # Clean
+    command = "rm "+SE2019_STORAGE+ "/stage* "
+    os.system(command)
+
+    command = "cd "+SE2019_STORAGE+ "; touch stage2.txt stage3.txt stage4.txt stage1.txt stage0.txt"
+    os.system(command)
+
+
 def work():
 
     BIN_MASSDNS = ROOT_DIR + "/massdns"                     + "/main.py"
@@ -79,19 +88,12 @@ def work():
     print("Tested: ")
     print(tested_domains)
 
-
-    # Clean
-    command = "rm "+SE2019_STORAGE+ "/stage* "
-    os.system(command)
-
-    command = "cd "+SE2019_STORAGE+ "; touch stage2.txt stage3.txt stage4.txt stage1.txt stage0.txt"
-    os.system(command)
-
+    clean()
     
     return 0
 
 def main():
-    PER_TRY = 3
+    PER_TRY = 1
 
     #lines_ALL_URLs = readafile(ALL_URLs_FILE_TEST)
     lines_ALL_URLs = readafile(ALL_URLs_FILE)
@@ -139,4 +141,5 @@ def main():
 
 if __name__ == "__main__":
     print(str(PWD)+"/main.py started")
+    clean()
     main()

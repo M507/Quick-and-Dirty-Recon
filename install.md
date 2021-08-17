@@ -1,6 +1,7 @@
 
 
 apt install python-pip python3-pip -y
+pip install py-altdns
 pip3 install -r requirements.txt
 
 wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
