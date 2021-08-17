@@ -91,18 +91,21 @@ def work():
     return 0
 
 def main():
+    PER_TRY = 3
+
     #lines_ALL_URLs = readafile(ALL_URLs_FILE_TEST)
     lines_ALL_URLs = readafile(ALL_URLs_FILE)
     lines_ALL_URLs = list(dict.fromkeys(lines_ALL_URLs))
     lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
     lines_ALL_URLs_new = [ url for url in lines_ALL_URLs if url not in lines_VISITED_URLs]
     
+
     flag_stop = 0
     while True:
         try:
             tmp_elements = []
             i = 0
-            while i < 6:
+            while i < PER_TRY:
                 if len(lines_ALL_URLs_new) <= 0:
                     flag_stop = 1
                     break
