@@ -7,7 +7,10 @@ load_dotenv()
 ROOT_DIR = "/root/vsvm/"
 STORAGE_DIR = ROOT_DIR + "/Storage/"
 ALL_URLs_FILE = STORAGE_DIR + "/urls.txt" 
+ALL_URLs_FILE_TEST = STORAGE_DIR + "/urls.txt.test" 
 ALL_URLs_FILE_WITH_PARAMETERS = STORAGE_DIR + "/urls_with_parameters.txt" 
+PASSIVE_DNS_COLLECTION_FILE = STORAGE_DIR + "/passive_dns_enum.txt" 
+COLLECTED_DNS_SUBDOMAINS = STORAGE_DIR + "/Collected_DNS_Subdomains.txt"  
 
 API_FILE = STORAGE_DIR + "/api.txt" 
 SCOPE_FOLDER = ROOT_DIR + "/Scope"
@@ -21,6 +24,10 @@ WEBHOOK_URL = os.environ.get('WEBHOOK_URL')
 WEBHOOK_URL_CLI = os.environ.get('WEBHOOK_URL_CLI')
 BURP_PROXY_IP = os.environ.get('BURP_PROXY_IP')
 
+
+BIN_MASSDNS = ROOT_DIR + "massdns"  + "/main.py"
+BIN_AMASS   = ROOT_DIR + "Amass"    + "/main.py"
+BIN_ALTDNS  = ROOT_DIR + "altdns"   + "/main.py"
 
 
 def slack_notify(text, WEBHOOK_URL = WEBHOOK_URL):
@@ -62,6 +69,15 @@ def append_to_file(filename, line):
     except:
         return 0
 
+def append_to_file_lines(filename, lines):
+    try:
+        for line in lines:
+            file1 = open(filename, "a")  # append mode 
+            file1.write(line+"\n") 
+        file1.close()
+        return 0
+    except:
+        return 1
 
 def subprocess_execute_command(command, timeout = None):
     """
@@ -114,3 +130,12 @@ def extract_tld_string(URL):
     else:
         tldp = "{}.{}".format(extracted.domain, extracted.suffix)
     return tldp
+
+
+def overwrite_file(file_name,lines):
+    try:
+        with open(file_name, 'w') as outfile:
+            for line in lines:
+                outfile.write(str(line)+'\n')
+    except Exception as e:
+        print( "Error: overwrite_file function " + str(e))
