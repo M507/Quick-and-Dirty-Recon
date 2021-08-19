@@ -97,22 +97,43 @@ def work():
     
     return 0
 
+def clean_and_sort_list():
+    pass
+
 def main():
     PER_TRY = 1
     #lines_ALL_URLs = readafile(ALL_URLs_FILE_TEST)
+
     lines_ALL_URLs = readafile(ALL_URLs_FILE)
     lines_ALL_URLs = list(dict.fromkeys(lines_ALL_URLs))
+
     lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
+    lines_VISITED_URLs = list(dict.fromkeys(lines_VISITED_URLs))
+
     blocklist_URLs = readafile(SE2019_BLOCKLIST)
-    lines_ALL_URLs_new = [ url for url in lines_ALL_URLs if url not in lines_VISITED_URLs]
+    blocklist_URLs = list(dict.fromkeys(blocklist_URLs))
+
+    lines_ALL_URLs_new = []
+
+    for url in lines_ALL_URLs:
+        url = url.strip(' ')
+        if url not in lines_VISITED_URLs:
+            if url.startswith( 'www.' ):
+                url = url[4:]
+                if url not in lines_VISITED_URLs:
+                    lines_ALL_URLs_new.append(url)
+                continue
+            lines_ALL_URLs_new.append(url)
 
     for url in lines_ALL_URLs_new:
         for blocked_url in blocklist_URLs:
             if blocked_url in url:
                 lines_ALL_URLs_new.remove(url)
+                break
 
-    if len(lines_ALL_URLs_new) >= 0:
+    if len(lines_ALL_URLs_new) <= 0:
         print("Nothing to work on")
+
 
     flag_stop = 0
     while True:
@@ -125,11 +146,13 @@ def main():
                     break
                     
                 tmp_element = lines_ALL_URLs_new.pop(0)
+                #print(tmp_element)
                 if tmp_element.startswith( 'www.' ):
                     tmp_element = tmp_element[4:]
                 if tmp_element not in lines_VISITED_URLs:
                     tmp_elements.append(tmp_element)
                 i+=1
+            
             
             if len(tmp_elements) <= 0:
                 break

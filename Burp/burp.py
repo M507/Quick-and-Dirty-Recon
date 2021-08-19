@@ -51,15 +51,13 @@ def get_path_and_q(URL):
 def main():
     allowed_strings_slash_domains = get_scope()
 
-    
-
     lines_ALL_URLs = readafile(ALL_URLs_FILE_WITH_PARAMETERS)
-    print("lines_ALL_URLs" + str(lines_ALL_URLs))
+    #print("lines_ALL_URLs" + str(lines_ALL_URLs))
     lines_ALL_URLs = list(dict.fromkeys(lines_ALL_URLs))
-    print("lines_ALL_URLs" + str(lines_ALL_URLs))
+    #print("lines_ALL_URLs" + str(lines_ALL_URLs))
     lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
-    print("lines_VISITED_URLs" + str(lines_VISITED_URLs))
-    lines_ALL_URLs_new = [ url for url in lines_ALL_URLs if url not in lines_VISITED_URLs]
+    #print("lines_VISITED_URLs" + str(lines_VISITED_URLs))
+    #lines_ALL_URLs_new = [ url for url in lines_ALL_URLs if url not in lines_VISITED_URLs]
     print("lines_ALL_URLs_new" + str(lines_ALL_URLs_new))
     
     random_sleep_flag = 0
