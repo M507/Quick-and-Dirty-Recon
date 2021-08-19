@@ -139,3 +139,11 @@ def overwrite_file(file_name,lines):
                 outfile.write(str(line)+'\n')
     except Exception as e:
         print( "Error: overwrite_file function " + str(e))
+
+
+def getPercent(first, second, integer = False):
+   percent = first / second * 100
+   
+   if integer:
+       return int(percent)
+   return percent

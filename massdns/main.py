@@ -107,8 +107,22 @@ def run(IN_FILE_NAME,OUT_FILE_NAME):
         # Save
         #append_to_file_lines(OUT_FILE_NAME, domain_names)
         domain_names = list(dict.fromkeys(domain_names))
-        if (len(domain_names)-1) >= len(lines_ALL_URLs):
-            return
+        print("Is "+str(len(domain_names))+" >=? "+str(len(lines_ALL_URLs)))
+        if len(lines_ALL_URLs) > 400000:
+            try:
+                getPercentvar = getPercent(len(domain_names), len(lines_ALL_URLs))
+            except Exception as ex:
+                getPercentvar = 0
+                print("getPercentvar error")
+                print(ex)
+            if (getPercentvar) > 70:
+                #if 0 not in (len(domain_names), len(lines_ALL_URLs)):
+                print("stop")
+                return
+            else:
+                print("pass1")
+        else:
+                print("pass2")
         overwrite_file(OUT_FILE_NAME,domain_names)
     except Exception as ex:
         print("run(FILE_NAME)")

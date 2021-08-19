@@ -14,8 +14,8 @@ STAFE_1_FILE = PWD + "/Storage/stage1.txt"
 STAFE_2_FILE = PWD + "/Storage/stage2.txt"
 STAFE_3_FILE = PWD + "/Storage/stage3.txt"
 STAFE_4_FILE = PWD + "/Storage/stage4.txt"
-
-
+STAFE_5_FILE = PWD + "/Storage/stage5.txt"
+SE2019_BLOCKLIST = SE2019_STORAGE + "/blocklist.txt"
 
 debug = 1
 
@@ -42,7 +42,7 @@ def clean():
     command = "rm "+SE2019_STORAGE+ "/stage* "
     os.system(command)
 
-    command = "cd "+SE2019_STORAGE+ "; touch stage2.txt stage3.txt stage4.txt stage1.txt stage0.txt"
+    command = "cd "+SE2019_STORAGE+ "; touch stage2.txt stage3.txt stage4.txt stage1.txt stage0.txt stage5.txt"
     os.system(command)
 
 
@@ -58,22 +58,26 @@ def work():
     print(command)
     os.system(command)
 
+    command = "python3 " + BIN_MASSDNS + " "+ STAFE_1_FILE + " "+ STAFE_2_FILE
+    print(command)
+    os.system(command)
+    valid_domains = readafile(STAFE_2_FILE)
+    append_to_file_lines(STAFE_5_FILE, valid_domains)
 
     command = "python3 " + BIN_commonspeak2 + " "+ STAFE_0_FILE + " "+ STAFE_1_FILE
     print(command)
     os.system(command)
 
-
     command = "python3 " + BIN_MASSDNS + " "+ STAFE_1_FILE + " "+ STAFE_2_FILE
     print(command)
     os.system(command)
-
+    valid_domains = readafile(STAFE_2_FILE)
+    append_to_file_lines(STAFE_5_FILE, valid_domains)
 
     command = "python3 " + BIN_ALTDNS + " "+ STAFE_2_FILE + " "+ STAFE_3_FILE
     print(command)
     os.system(command)
 
-    valid_domains = readafile(STAFE_2_FILE)
     append_to_file_lines(STAFE_3_FILE, valid_domains)
 
     command = "python3 " + BIN_MASSDNS + " "+ STAFE_3_FILE + " "+ STAFE_4_FILE
@@ -81,7 +85,8 @@ def work():
     os.system(command)
 
     # Store
-    valid_domains = readafile(STAFE_4_FILE)
+    valid_domains = readafile(STAFE_5_FILE) + readafile(STAFE_4_FILE)
+    valid_domains = list(dict.fromkeys(valid_domains))
     append_to_file_lines(COLLECTED_DNS_SUBDOMAINS, valid_domains)
 
     tested_domains = readafile(STAFE_0_FILE)
@@ -94,13 +99,20 @@ def work():
 
 def main():
     PER_TRY = 1
-
     #lines_ALL_URLs = readafile(ALL_URLs_FILE_TEST)
     lines_ALL_URLs = readafile(ALL_URLs_FILE)
     lines_ALL_URLs = list(dict.fromkeys(lines_ALL_URLs))
     lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
+    blocklist_URLs = readafile(SE2019_BLOCKLIST)
     lines_ALL_URLs_new = [ url for url in lines_ALL_URLs if url not in lines_VISITED_URLs]
-    
+
+    for url in lines_ALL_URLs_new:
+        for blocked_url in blocklist_URLs:
+            if blocked_url in url:
+                lines_ALL_URLs_new.remove(url)
+
+    if len(lines_ALL_URLs_new) >= 0:
+        print("Nothing to work on")
 
     flag_stop = 0
     while True:
