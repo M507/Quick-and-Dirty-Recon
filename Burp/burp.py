@@ -58,7 +58,7 @@ def main():
     lines_VISITED_URLs = readafile(VISITED_URLs_FILE)
     #print("lines_VISITED_URLs" + str(lines_VISITED_URLs))
     #lines_ALL_URLs_new = [ url for url in lines_ALL_URLs if url not in lines_VISITED_URLs]
-    print("lines_ALL_URLs_new" + str(lines_ALL_URLs_new))
+    #print("lines_ALL_URLs_new" + str(lines_ALL_URLs_new))
     
     random_sleep_flag = 0
 
