@@ -2,7 +2,13 @@
 
 
 ### Integrated projects
+- https://portswigger.net/burp/pro
+- https://github.com/OWASP/Amass
+- https://github.com/infosec-au/altdns
+- https://github.com/blechschmidt/massdns
+- https://github.com/hakluke/haktrails
 - https://github.com/LukaSikic/subzy
+- https://github.com/assetnote/commonspeak2-wordlists
 - https://github.com/anshumanpattnaik/http-request-smuggling
 
 ### How to start adding projects
