@@ -1,5 +1,6 @@
 
 
+This is a personal reconnaissance and vulnerability scanning project. This project integrates the following tools.
 
 ### Integrated projects
 - https://portswigger.net/burp/pro
@@ -11,7 +12,11 @@
 - https://github.com/assetnote/commonspeak2-wordlists
 - https://github.com/anshumanpattnaik/http-request-smuggling
 
-### How to start adding projects
+
+### How does it work?
+Read the code files, and you will understand it : )
+
+### How to integrate other tools
 
 ```txt
 For every project do the next:
@@ -19,10 +24,11 @@ For every project do the next:
         main.py
         Storage/visited_urls.txt
 Example is provided
+```
 
-.env is where slack webhook is:
+Add your slack webhook in `.env` file, an example:
+```
 WEBHOOK_URL=https://hooks.slack.com/services/AAAAAAAAAAAAAAAAAAAAAAA
-
 ```
 
 
