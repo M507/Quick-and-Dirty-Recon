@@ -132,6 +132,7 @@ def extract_tld_string(URL):
     return tldp
 
 
+
 def overwrite_file(file_name,lines):
     try:
         with open(file_name, 'w') as outfile:

@@ -11,7 +11,11 @@ This is a personal reconnaissance and vulnerability scanning project. This proje
 - https://github.com/LukaSikic/subzy
 - https://github.com/assetnote/commonspeak2-wordlists
 - https://github.com/anshumanpattnaik/http-request-smuggling
-
+- https://github.com/GerbenJavado/LinkFinder
+- https://github.com/mvdan/xurls
+- https://github.com/jaeles-project/gospider
+- https://github.com/m4ll0k/SecretFinder
+- https://github.com/OJ/gobuster
 
 ### How does it work?
 Read the code files, and you will understand it : )
