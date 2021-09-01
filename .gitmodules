@@ -1,3 +1,9 @@
 [submodule "http-request-smuggling"]
 	path = http-request-smuggling
 	url = https://github.com/anshumanpattnaik/http-request-smuggling
+[submodule "LinkFinder"]
+	path = LinkFinder
+	url = https://github.com/GerbenJavado/LinkFinder
+[submodule "SecretFinder"]
+	path = SecretFinder
+	url = https://github.com/m4ll0k/SecretFinder.git
