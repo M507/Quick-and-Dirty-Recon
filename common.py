@@ -148,3 +148,9 @@ def getPercent(first, second, integer = False):
    if integer:
        return int(percent)
    return percent
+
+def erase_content_of_file(TMP_FILE):
+    try:
+        open(TMP_FILE, mode='w').close()
+    except:
+        pass

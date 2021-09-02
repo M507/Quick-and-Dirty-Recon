@@ -1,6 +1,11 @@
 
 
-This is a personal reconnaissance and vulnerability scanning project. This project integrates the following tools.
+Quick and dirty reconnaissance and vulnerability scanning project. Not the most efficient, secure, and stable code. All I know is that this code led me to discover many bugs : ) 
+
+### How does it work?
+Read the code files, and you will understand it : )
+
+It integrates the following tools.
 
 ### Integrated projects
 - https://portswigger.net/burp/pro
@@ -16,9 +21,6 @@ This is a personal reconnaissance and vulnerability scanning project. This proje
 - https://github.com/jaeles-project/gospider
 - https://github.com/m4ll0k/SecretFinder
 - https://github.com/OJ/gobuster
-
-### How does it work?
-Read the code files, and you will understand it : )
 
 ### How to integrate other tools
 

@@ -7,13 +7,15 @@ from subcommon import *
 
 PWD = ROOT_DIR + "/gobuster"
 BIN = "/bin/gobuster"
+#WORDLIST_TOBEUSED = "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"
+WORDLIST_TOBEUSED = "/usr/share/wordlists/common.txt"
+#WORDLIST_TOBEUSED = "/usr/share/wordlists/test.txt"
 
 debug = 1
 
 def work(URL):
-    command = BIN + " dir -u "+URL+" -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt  -o "+TMP_URLs_FILE
+    command = BIN + " dir -u "+URL+" -w "+WORDLIST_TOBEUSED+" -o "+TMP_URLs_FILE
     os.system(command)
-
     return 0
 
 def parse_urls(URL):
@@ -33,11 +35,22 @@ def arg_main(URL):
     parse_urls(URL)
 
 if __name__ == "__main__":
-    print("subzy/main.py started")
+    WHOAMI = "HiddenGems/main.py"
+    print(WHOAMI+" started")
     if len(sys.argv)  > 2:
         URL    = sys.argv[1]
         RANDOM = sys.argv[2]
-        os.mkdir( PWD + "/Storage/"+RANDOM)
+        try:
+            try:
+                os.mkdir( PWD + "/Storage/")
+            except:
+                print(WHOAMI + " Error 1")
+            try:
+                os.mkdir( PWD + "/Storage/"+RANDOM+"/")
+            except:
+                print(WHOAMI + " Error 2")
+        except:
+            print("ERROR _main_ gobuster 3245234")
         VISITED_URLs_FILE   = PWD + "/Storage/"+RANDOM+"/visited_urls.txt"
         FOUND_URLs_FILE     = PWD + "/Storage/"+RANDOM+"/found_urls.txt"
         TMP_URLs_FILE       = PWD + "/Storage/"+RANDOM+"/tmp.txt"
