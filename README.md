@@ -1,6 +1,6 @@
 
 
-Quick and dirty reconnaissance and vulnerability scanning project. Not the most efficient, secure, and stable code. All I know is that this code led me to discover many bugs : ) 
+Quick and dirty reconnaissance and vulnerability scanning project. Not the most efficient, secure, and stable code. All I know is that this code led me to many bugs : ) 
 
 ### How does it work?
 Read the code files, and you will understand it : )
