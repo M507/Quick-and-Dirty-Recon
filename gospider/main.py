@@ -44,13 +44,25 @@ def arg_main(URL, IN_FILE, TMP_URLs_DIR, TMP_URLs_FILE, DOMAIN, TMP_TMP_GOSPIDER
 
 if __name__ == "__main__":
     # python3 main.py <url> /root/vsvm/gospider/Storage/test_urls.txt dwedwer234rded
-    print("subzy/main.py started")
+    WHOAMI = "gospider/main.py"
+    print(WHOAMI+" started")
     if len(sys.argv)  > 2:
         URL    = sys.argv[1]
         IN_FILE    = sys.argv[2]
         RANDOM = sys.argv[3]
         try:
-            os.mkdir( PWD + "/Storage/"+RANDOM)
+            try:
+                os.mkdir( PWD + "/Storage/")
+            except:
+                print(WHOAMI + " Error 1")
+            try:
+                os.mkdir( PWD + "/Storage/"+RANDOM+"/")
+            except:
+                print(WHOAMI + " Error 2")
+            try:
+                os.mkdir(SCOPE)
+            except:
+                print(WHOAMI + " Error 3")
         except:
             pass
         VISITED_URLs_FILE   = PWD + "/Storage/"+RANDOM+"/visited_urls.txt"

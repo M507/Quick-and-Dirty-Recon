@@ -47,10 +47,26 @@ def remove_unwanted_urls(LIST_OF_URLs,BLOCK_LIST):
     return tmp_list
 
 
+def remove_unwanted_extensions(LIST_OF_URLs,unwanted_extensions):
+    # Remove zip files and other unwanted URLs     
+    tmp_remove_unwanted_extensions = []
+    for url_tmp in LIST_OF_URLs:
+        flag_dont_add = 0
+        for unwanted_extension in unwanted_extensions:
+            if url_tmp.endswith(unwanted_extension):
+                flag_dont_add = 1
+        if flag_dont_add == 0:
+            tmp_remove_unwanted_extensions.append(url_tmp)
+    return tmp_remove_unwanted_extensions
+
+
 def work(URL, RANDOM, FOUND_SECRETS_FILE, FOUND_URLs_FILE, TMP_FILE, FOUND_JSs_FILE, BLOCK_LIST_FILE):
     
     BLOCK_LIST = readafile(BLOCK_LIST_FILE)
     BLOCK_LIST = list(dict.fromkeys(BLOCK_LIST))
+
+    unwanted_extensions = readafile(UNWANTED_EXTENSIONS_FILE)
+    unwanted_extensions = list(dict.fromkeys(unwanted_extensions))
     
     PWD_BBTz = ROOT_DIR + "/BBTz"
     BIN_BBTz = PWD_BBTz + "/main.py"
@@ -98,7 +114,10 @@ def work(URL, RANDOM, FOUND_SECRETS_FILE, FOUND_URLs_FILE, TMP_FILE, FOUND_JSs_F
 
 
     #print("HiddenGems: Overwriting tmp")
-    overwrite_file(TMP_FILE,GOBUSTER_lines_and_GOSPIDER_lines)
+    tmp_remove_unwanted_extensions = remove_unwanted_extensions(GOBUSTER_lines_and_GOSPIDER_lines, unwanted_extensions)
+    # Store tmp so it can be used next
+    overwrite_file(TMP_FILE,tmp_remove_unwanted_extensions)
+    tmp_remove_unwanted_extensions.clear()
     
     print("HiddenGems: Starting LinkFinderRunner")
     try:
@@ -124,19 +143,9 @@ def work(URL, RANDOM, FOUND_SECRETS_FILE, FOUND_URLs_FILE, TMP_FILE, FOUND_JSs_F
     GOBUSTER_lines_and_GOSPIDER_lines_and_LINKFINDERRUNNER_lines = list(dict.fromkeys(GOBUSTER_lines_and_GOSPIDER_lines_and_LINKFINDERRUNNER_lines))
     GOBUSTER_lines_and_GOSPIDER_lines_and_LINKFINDERRUNNER_lines = remove_unwanted_urls(GOBUSTER_lines_and_GOSPIDER_lines_and_LINKFINDERRUNNER_lines,BLOCK_LIST)
 
-    # Remove zip files and other unwanted URLs     
-    tmp_remove_unwanted_extensions = []
-    unwanted_extensions = readafile(UNWANTED_EXTENSIONS_FILE)
-    unwanted_extensions = list(dict.fromkeys(unwanted_extensions))
 
-    for url_tmp in GOBUSTER_lines_and_GOSPIDER_lines_and_LINKFINDERRUNNER_lines:
-        flag_dont_add = 0
-        for unwanted_extension in unwanted_extensions:
-            if url_tmp.endswith(unwanted_extension):
-                flag_dont_add = 1
-        if flag_dont_add == 0:
-            tmp_remove_unwanted_extensions.append(url_tmp)
-        
+    # unwanted_extensions
+    tmp_remove_unwanted_extensions = remove_unwanted_extensions(GOBUSTER_lines_and_GOSPIDER_lines_and_LINKFINDERRUNNER_lines, unwanted_extensions)
     # Store tmp so it can be used next
     overwrite_file(TMP_FILE,tmp_remove_unwanted_extensions)
     tmp_remove_unwanted_extensions.clear()
