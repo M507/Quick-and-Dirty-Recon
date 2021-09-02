@@ -21,6 +21,7 @@ It integrates the following tools.
 - https://github.com/jaeles-project/gospider
 - https://github.com/m4ll0k/SecretFinder
 - https://github.com/OJ/gobuster
+- https://github.com/projectdiscovery/naabu
 
 ### How to integrate other tools
 

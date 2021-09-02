@@ -52,5 +52,11 @@ wget https://github.com/mvdan/xurls/releases/download/v2.3.0/xurls_v2.3.0_linux_
 chmod +x xurls_v2.3.0_linux_amd64
 mv xurls_v2.3.0_linux_amd64 /bin/xurls
 
+cd /tmp
+wget https://github.com/projectdiscovery/naabu/releases/download/v2.0.4/naabu_2.0.4_linux_amd64.zip
+unzip naabu_2.0.4_linux_amd64.zip
+mv naabu /bin
+
+
 ```
 
