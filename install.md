@@ -37,6 +37,11 @@ pip3 install -r requirements.txt
 python3 setup.py install
 
 
+mkdir -p /usr/share/wordlists/
+cd /usr/share/wordlists/
+wget https://raw.githubusercontent.com/3ndG4me/KaliLists/master/dirb/common.txt
+
+
 mkdir -p /usr/share/wordlists/dirbuster/
 cd /usr/share/wordlists/dirbuster/
 wget https://github.com/daviddias/node-dirbuster/raw/master/lists/directory-list-2.3-medium.txt

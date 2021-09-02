@@ -8,8 +8,8 @@ from subcommon import *
 PWD = ROOT_DIR + "/gobuster"
 BIN = "/bin/gobuster"
 #WORDLIST_TOBEUSED = "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"
-#WORDLIST_TOBEUSED = "/usr/share/wordlists/common.txt"
-WORDLIST_TOBEUSED = "/usr/share/wordlists/test.txt"
+WORDLIST_TOBEUSED = "/usr/share/wordlists/common.txt"
+#WORDLIST_TOBEUSED = "/usr/share/wordlists/test.txt"
 
 debug = 1
 
