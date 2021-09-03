@@ -4,6 +4,4 @@
 [submodule "LinkFinder"]
 	path = LinkFinder
 	url = https://github.com/GerbenJavado/LinkFinder
-[submodule "SecretFinder"]
-	path = SecretFinder
-	url = https://github.com/m4ll0k/SecretFinder.git
+
