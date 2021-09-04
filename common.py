@@ -69,6 +69,15 @@ def append_to_file(filename, line):
     except:
         return 0
 
+def append_to_file_echo(filename, line):
+    try:
+        command = f"echo '{line}' >> {filename}"
+        print(command)
+        os.system(command)
+        return 0
+    except:
+        return 1
+
 def append_to_file_lines(filename, lines):
     try:
         for line in lines:

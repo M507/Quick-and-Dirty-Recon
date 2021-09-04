@@ -12,20 +12,19 @@ VISITED_URLs_FILE = PWD + "/Storage/visited_urls.txt"
 BIN = "/root/go/bin/subzy"
 WHOAMI = "subzy/main.py"
 
-NUM_WORKER_THREADS = 10000000
+NUM_WORKER_THREADS = 500
 debug = 1
 
 
 def append_to_file_for_threads(filename, line):
-    LOCK.acquire()
-    try:
-        file1 = open(filename, "a")  # append mode 
-        file1.write(line+"\n") 
-        file1.close()
-        return 0
-    except:
-        return 1
-    LOCK.release()
+    with LOCK:
+        try:
+            file1 = open(filename, "a")  # append mode 
+            file1.write(line+"\n") 
+            file1.close()
+            return 0
+        except:
+            return 1
 
 
 def verify(stdout):
@@ -54,6 +53,8 @@ def do_work(URL,VISITED_URLs_FILE):
     print("Testing "+ URL)
     command = BIN + " -target "+ URL
     stdout = str(subprocess_execute_command(command))
+
+    append_to_file_for_threads(VISITED_URLs_FILE, URL)
     
     if debug:
         print(stdout)
@@ -65,7 +66,6 @@ def do_work(URL,VISITED_URLs_FILE):
         message = PWD + " found something! '" + URL + "'"
         slack_notify(message)
 
-    append_to_file_for_threads(VISITED_URLs_FILE, URL)
     return 0
 
 def main():
@@ -94,11 +94,13 @@ def main():
 
 
 def main_threaded(IN_FILE):
+    return_int = 0
     # create threads
     threads_list = []
     try:
         file_io = open(IN_FILE,"r")
         while 1:
+            print("New "+str(NUM_WORKER_THREADS) + " threads")
             URLs = []
             for i in range(NUM_WORKER_THREADS):
                 try:
@@ -147,13 +149,13 @@ def main_threaded(IN_FILE):
     except Exception as ex:
         print(ex)
         print(WHOAMI+" arg_main Error 444565452")
-        return 1
+        return_int = 1
 
     # wait for threads to finish
     for th in threads_list:
         th.join()
 
-    return 0
+    return return_int
 
 
 
