@@ -4,16 +4,29 @@ sys.path.insert(1, ROOT_DIR)
 
 from common import * 
 from subcommon import * 
-from threading import Thread
+import threading
 
-
+LOCK = threading.Lock()
 PWD = ROOT_DIR + "/subzy"
 VISITED_URLs_FILE = PWD + "/Storage/visited_urls.txt"
 BIN = "/root/go/bin/subzy"
 WHOAMI = "subzy/main.py"
 
-NUM_WORKER_THREADS = 120
+NUM_WORKER_THREADS = 10000000
 debug = 1
+
+
+def append_to_file_for_threads(filename, line):
+    LOCK.acquire()
+    try:
+        file1 = open(filename, "a")  # append mode 
+        file1.write(line+"\n") 
+        file1.close()
+        return 0
+    except:
+        return 1
+    LOCK.release()
+
 
 def verify(stdout):
     try:
@@ -33,21 +46,27 @@ def isError(stdout):
             print(ex)
     return 0
 
-def do_work(target):
-    command = BIN + " -target "+ target
+def do_work(URL,VISITED_URLs_FILE):
+    if string_in_large_file(URL,VISITED_URLs_FILE):
+        #print(URL + " has been tested")
+        return 1
+    
+    print("Testing "+ URL)
+    command = BIN + " -target "+ URL
     stdout = str(subprocess_execute_command(command))
     
     if debug:
         print(stdout)
     
     if isError(stdout):
-        return 0
+        return 1
 
     if verify(stdout):
-        message = PWD + " found something! '" + target + "'"
+        message = PWD + " found something! '" + URL + "'"
         slack_notify(message)
 
-    return 1
+    append_to_file_for_threads(VISITED_URLs_FILE, URL)
+    return 0
 
 def main():
     lines_ALL_URLs1 = readafile(ALL_URLs_FILE)
@@ -90,6 +109,8 @@ def main_threaded(IN_FILE):
                     return 1
             
             URLs = [URL for URL in URLs if len(URL) > 1]
+            
+            #print(str(URLs))
 
             if len(URLs) < 1:
                 print(WHOAMI+" empty list .. exiting 3647533756")
@@ -97,11 +118,6 @@ def main_threaded(IN_FILE):
 
             if not URLs:
                 break
-            
-            # Remove scanned URLs
-            URLs = remove_scanned_URLs(URLs, VISITED_URLs_FILE)
-            if len(URLs) < 1:
-                continue
 
             #print(str(URLs))
             
@@ -109,9 +125,8 @@ def main_threaded(IN_FILE):
                 try:
                     URL = URLs.pop(0)
                     URL = re.sub('[^a-zA-Z0-9 \.-]', '', URL)
-                    append_to_file(VISITED_URLs_FILE, URL)
-                    print("Testing "+ URL)
-                    th = Thread(target=do_work, args=(str(URL),))
+
+                    th = threading.Thread(target=do_work, args=(URL,VISITED_URLs_FILE))
                     th.start()
                     threads_list.append(th)
                 except Exception as ex:
