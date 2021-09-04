@@ -30,6 +30,7 @@ def isError(stdout):
     return 0
 
 def work(target):
+    target = re.sub('[^a-zA-Z0-9 \.-]', '', target)
     command = BIN + " -target "+ target
     stdout = str(subprocess_execute_command(command))
     

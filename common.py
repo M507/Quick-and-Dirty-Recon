@@ -1,4 +1,4 @@
-import os, json, requests, subprocess, tldextract
+import os, json, requests, subprocess, tldextract, re
 from random import randint
 from time import sleep
 from dotenv import load_dotenv
@@ -101,6 +101,55 @@ def subprocess_execute_command(command, timeout = None):
             'subprocess_execute_command returned an error \n'
         )
 
+def subprocess_execute_command_v2(command, timeout = None):
+    """
+    Execute command locally
+    :param command:
+    :return: stdout
+    """
+    
+    try:
+        if len(command) > 0:
+            command = command.split(' ')
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            if timeout is not None:
+                try:
+                    process.wait(timeout)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+            
+            # Wait until process terminates (without using p.wait())
+            while process.poll() is None:
+                # Process hasn't exited yet, let's wait some
+                sleep(0.5)
+
+            # Get return code from process
+            return_code = process.returncode
+            stdout, stderr = process.communicate()
+
+            return stdout, return_code
+    except:
+        raise ValueError(
+            'subprocess_execute_command returned an error \n'
+        )
+
+def subprocess_execute_command_v0(command, timeout = None):
+    """
+    Execute command locally
+    :param command:
+    :return: stdout
+    """
+    
+    try:
+        pass
+
+        return stdout, return_code
+    except:
+        raise ValueError(
+            'subprocess_execute_command returned an error \n'
+        )
+
+
 
 # This gets a list of hostnames
 def get_scope():
@@ -154,3 +203,51 @@ def erase_content_of_file(TMP_FILE):
         open(TMP_FILE, mode='w').close()
     except:
         pass
+
+
+def init_dirs(PWD, RANDOM, SCOPE):
+    try:
+        try:
+            os.mkdir( PWD + "/Storage/")
+        except:
+            pass
+        try:
+            os.mkdir( PWD + "/Storage/"+RANDOM+"/")
+        except:
+            pass
+        try:
+            os.mkdir(SCOPE)
+        except:
+            pass
+    except:
+        pass
+
+def create_files(list_of_files):
+    for file_name in list_of_files:
+        try:
+            open(file_name, mode='w').close()
+        except OSError:
+            print('Failed creating the file')
+        else:
+            print(file_name+' File created')
+
+
+def string_in_large_file(string_var,file_path):
+    # rg '^ibm.com$' Collected_DNS_Subdomains.txt
+    # grep -x 'ibm.com' Collected_DNS_Subdomains.txt
+    # command = "grep -x '"+string_var+"' "+file_path
+    # print(command)
+    try:
+        string_var = string_var.replace('.','\\.')
+        command = f"rg -x '{string_var}' {file_path}"
+        #print(command)
+        stdout = subprocess.check_output(command, shell = True)
+        string_stdout = str(stdout).split("\\n")
+        # print(str(string_stdout))
+        # print(len(string_stdout))
+        if len(string_stdout) > 1:
+            return 1
+    except:
+        pass
+        #print("Error in string_in_large_file() 312465263 - that means it doesn't exist")
+    return 0
