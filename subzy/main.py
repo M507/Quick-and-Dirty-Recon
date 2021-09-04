@@ -9,6 +9,7 @@ import threading
 LOCK = threading.Lock()
 PWD = ROOT_DIR + "/subzy"
 VISITED_URLs_FILE = PWD + "/Storage/visited_urls.txt"
+VULN_URLs_FILE = PWD + "/Storage/vuln_urls.txt"
 BIN = "/root/go/bin/subzy"
 WHOAMI = "subzy/main.py"
 
@@ -65,6 +66,7 @@ def do_work(URL,VISITED_URLs_FILE):
     if verify(stdout):
         message = PWD + " found something! '" + URL + "'"
         slack_notify(message)
+        append_to_file_for_threads(VULN_URLs_FILE, URL)
 
     return 0
 

@@ -1,6 +1,8 @@
 # naabu -p 21-23,25,53,80,110-111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080 -silent -host hackerone.com
 # FM!!!!!!!!!!!!!!!!!!! Don't pusht this \/
 """
+NOTE: THIS IS THE WOREST THREADING i HAVE EVER WRITTEN... FIX IT!! USE YOUR CODE in the Subzy client
+
 python3 /root/vsvm/HiddenGems/main.py https://gggggogle.com RANDOMESTRING
 
 TO RUN THIS YOU NEED TO FOLLOW THIS:
