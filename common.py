@@ -251,3 +251,12 @@ def string_in_large_file(string_var,file_path):
         pass
         #print("Error in string_in_large_file() 312465263 - that means it doesn't exist")
     return 0
+
+def remove_scanned_URLs(URLs, VISITED_DOMAINs_FILE):
+    URLs_new = []
+    for URL in URLs:
+        URL = URL.strip('\n').strip(' ')
+        if string_in_large_file(URL,VISITED_DOMAINs_FILE):
+            continue
+        URLs_new.append(URL)
+    return URLs_new

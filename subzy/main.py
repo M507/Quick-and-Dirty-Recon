@@ -4,11 +4,15 @@ sys.path.insert(1, ROOT_DIR)
 
 from common import * 
 from subcommon import * 
+from threading import Thread
+
 
 PWD = ROOT_DIR + "/subzy"
 VISITED_URLs_FILE = PWD + "/Storage/visited_urls.txt"
 BIN = "/root/go/bin/subzy"
+WHOAMI = "subzy/main.py"
 
+NUM_WORKER_THREADS = 120
 debug = 1
 
 def verify(stdout):
@@ -29,8 +33,7 @@ def isError(stdout):
             print(ex)
     return 0
 
-def work(target):
-    target = re.sub('[^a-zA-Z0-9 \.-]', '', target)
+def do_work(target):
     command = BIN + " -target "+ target
     stdout = str(subprocess_execute_command(command))
     
@@ -71,6 +74,75 @@ def main():
             print(ex)
 
 
+def main_threaded(IN_FILE):
+    # create threads
+    threads_list = []
+    try:
+        file_io = open(IN_FILE,"r")
+        while 1:
+            URLs = []
+            for i in range(NUM_WORKER_THREADS):
+                try:
+                    URLs.append(file_io.readline())
+                except Exception as ex:
+                    print(ex)
+                    print(WHOAMI+" arg_main Error 52346763")
+                    return 1
+            
+            URLs = [URL for URL in URLs if len(URL) > 1]
+
+            if len(URLs) < 1:
+                print(WHOAMI+" empty list .. exiting 3647533756")
+                break
+
+            if not URLs:
+                break
+            
+            # Remove scanned URLs
+            URLs = remove_scanned_URLs(URLs, VISITED_URLs_FILE)
+            if len(URLs) < 1:
+                continue
+
+            #print(str(URLs))
+            
+            for i in range(NUM_WORKER_THREADS):
+                try:
+                    URL = URLs.pop(0)
+                    URL = re.sub('[^a-zA-Z0-9 \.-]', '', URL)
+                    append_to_file(VISITED_URLs_FILE, URL)
+                    print("Testing "+ URL)
+                    th = Thread(target=do_work, args=(str(URL),))
+                    th.start()
+                    threads_list.append(th)
+                except Exception as ex:
+                    print(ex)
+                    print(WHOAMI+" arg_main Error 34672314")
+                    break
+
+            
+            # wait for threads to finish
+            for th in threads_list:
+                th.join()
+            
+
+            print("thread finished...looping")
+
+        file_io.close()
+    
+    except Exception as ex:
+        print(ex)
+        print(WHOAMI+" arg_main Error 444565452")
+        return 1
+
+    # wait for threads to finish
+    for th in threads_list:
+        th.join()
+
+    return 0
+
+
+
 if __name__ == "__main__":
-    print("subzy/main.py started")
-    main()
+    print(WHOAMI+" started")
+    for IN_FILE in [ALL_URLs_FILE, COLLECTED_DNS_SUBDOMAINS]:
+        main_threaded(IN_FILE)

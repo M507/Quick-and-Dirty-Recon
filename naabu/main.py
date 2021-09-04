@@ -41,14 +41,6 @@ def do_work(URL, PORTS, OUT_FILE):
     return 0
 
 
-def remove_scanned_URLs(URLs, VISITED_DOMAINs_FILE):
-    URLs_new = []
-    for URL in URLs:
-        URL = URL.strip('\n').strip(' ')
-        if string_in_large_file(URL,VISITED_DOMAINs_FILE):
-            continue
-        URLs_new.append(URL)
-    return URLs_new
 
 def arg_main(IN_FILE, PORTS, RANDOM, VISITED_DOMAINs_FILE, FOUND_PORTs_FILE, TMP_FILE):
     try:
