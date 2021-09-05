@@ -67,6 +67,8 @@ def arg_main(IN_FILE, PORTS, RANDOM, VISITED_DOMAINs_FILE, FOUND_PORTs_FILE, TMP
             if not URLs:
                 break
             
+
+            # TODO FIX THISS!! THIS SHOULDN'T BE HERE!! IT SHOULD BE INSIDE EACH THREAD!!!
             # Remove scanned URLs
             URLs = remove_scanned_URLs(URLs, VISITED_DOMAINs_FILE)
             if len(URLs) < 1:
