@@ -46,6 +46,7 @@ def work(target):
     return 1
 
 def main():
+    ALL_URLs_FILE = "/root/vsvm/http-request-smuggling-Integration/tests/test.txt"
     lines_ALL_URLs = readafile(ALL_URLs_FILE)
     lines_ALL_URLs = list(dict.fromkeys(lines_ALL_URLs))
     lines_VISITED_URLs = readafile(VISITED_URLs_FILE)

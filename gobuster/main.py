@@ -1,3 +1,12 @@
+"""
+python3 main.py url.com random
+
+TODO :Add a recursive functionality 
+
+
+python3 main.py https://url.com/ random-string  <optional list> 
+
+"""
 import sys
 ROOT_DIR = "/root/vsvm/"
 sys.path.insert(1, ROOT_DIR)
@@ -8,8 +17,8 @@ from subcommon import *
 PWD = ROOT_DIR + "/gobuster"
 BIN = "/bin/gobuster"
 #WORDLIST_TOBEUSED = "/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt"
-#WORDLIST_TOBEUSED = "/usr/share/wordlists/common.txt"
-WORDLIST_TOBEUSED = "/usr/share/wordlists/test.txt"
+WORDLIST_TOBEUSED = "/usr/share/wordlists/common.txt"
+#WORDLIST_TOBEUSED = "/usr/share/wordlists/test.txt"
 
 debug = 1
 
@@ -40,6 +49,12 @@ if __name__ == "__main__":
     if len(sys.argv)  > 2:
         URL    = sys.argv[1]
         RANDOM = sys.argv[2]
+        WORDLIST_TOBEUSED_TMP = sys.argv[3]
+        try:
+            if len(WORDLIST_TOBEUSED_TMP) > 1:
+                WORDLIST_TOBEUSED = WORDLIST_TOBEUSED_TMP
+        except:
+            pass
         try:
             try:
                 os.mkdir( PWD + "/Storage/")

@@ -84,6 +84,11 @@ def work():
     print(command)
     os.system(command)
 
+    # TODO:
+    # Search Subdomain using Gospider
+    # gospider -d 0 -s "https://site.com" -c 5 -t 100 -d 5 --blacklist jpg,jpeg,gif,css,tif,tiff,png,ttf,woff,woff2,ico,pdf,svg,txt | grep -Eo '(http|https)://[^/"]+' | anew
+
+
     # Store
     valid_domains = readafile(STAFE_5_FILE) + readafile(STAFE_4_FILE)
     valid_domains = list(dict.fromkeys(valid_domains))
@@ -102,9 +107,9 @@ def clean_and_sort_list():
 
 def main():
     PER_TRY = 1
-    #lines_ALL_URLs = readafile(ALL_URLs_FILE_TEST)
+    lines_ALL_URLs = readafile(ALL_URLs_FILE_TEST)
 
-    lines_ALL_URLs = readafile(ALL_URLs_FILE)
+    #lines_ALL_URLs = readafile(ALL_URLs_FILE)
     lines_ALL_URLs = list(dict.fromkeys(lines_ALL_URLs))
 
     lines_VISITED_URLs = readafile(VISITED_URLs_FILE)

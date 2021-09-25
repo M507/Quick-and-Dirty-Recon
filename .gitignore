@@ -9,3 +9,6 @@ mydocs.txt
 test-*
 TODO*
 test_*
+bash-cash/*
+tests/*
+test/*
