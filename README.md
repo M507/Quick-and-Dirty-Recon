@@ -3,7 +3,7 @@
 Quick and dirty reconnaissance and vulnerability scanning project. Not the most efficient, secure, and stable code. All I know is that this code led me to many bugs : ) 
 
 ### How does it work?
-Read the code files, and you will understand it : )
+If it happened and I made this repo public, I apologize for not documenting it. Just read the code files, and you will understand it : ). 
 
 It integrates the following tools.
 
@@ -23,15 +23,7 @@ It integrates the following tools.
 - https://github.com/OJ/gobuster
 - https://github.com/projectdiscovery/naabu
 
-### How to integrate other tools
 
-```txt
-For every project do the next:
-    A folder with:
-        main.py
-        Storage/visited_urls.txt
-Example is provided
-```
 
 Add your slack webhook in `.env` file, an example:
 ```
