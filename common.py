@@ -30,6 +30,9 @@ BIN_AMASS   = ROOT_DIR + "Amass"    + "/main.py"
 BIN_ALTDNS  = ROOT_DIR + "altdns"   + "/main.py"
 
 
+BROWSER_USERNAME = os.environ.get('BROWSER_USERNAME')
+
+
 def slack_notify(text, WEBHOOK_URL = WEBHOOK_URL):
     slack_data = {'text': text}
 

@@ -6,7 +6,7 @@ sys.path.insert(1, ROOT_DIR)
 from common import * 
 from subcommon import * 
 
-PWD = ROOT_DIR + "/subdomain-enumeration-2019"
+PWD = ROOT_DIR + "/SubdomainEnumeration"
 SE2019_STORAGE = PWD + "/Storage/"
 VISITED_URLs_FILE = PWD + "/Storage/visited_urls.txt"
 STAFE_0_FILE = PWD + "/Storage/stage0.txt"

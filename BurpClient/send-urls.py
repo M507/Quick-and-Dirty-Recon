@@ -13,9 +13,11 @@ try:
 except ImportError:
      from urlparse import urlparse
 
-
+"""
+Only works on Linux
+"""
 def getHistoryFileName():
-    filePath = "/home/um/.config/google-chrome/Default" # user's history database path (Chrome)
+    filePath = "/home/"+BROWSER_USERNAME+"/.config/google-chrome/Default" # user's history database path (Chrome)
     getFiles = os.listdir(filePath)
     historyFile = os.path.join(filePath, 'History')
     newHistoryFile = historyFile+".old"
