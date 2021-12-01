@@ -13,8 +13,8 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 " >> /etc/profile
 
-go get -u -v github.com/lukasikic/subzy
-go install -v github.com/lukasikic/subzy
+go get -u -v github.com/M507/subzy
+go install -v github.com/M507/subzy
 
 
 apt install p7zip-full unzip -y
